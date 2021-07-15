@@ -14,34 +14,34 @@ router.post('/signup', (req, res) => {
 
     if(name == '' || email == '' || password == '' || dateOfBirth == ''){
         res.json({
-            status: "FAILED",
+            status: "FAILED", //TODO: Proper coded status
             message: "Empty input fields!"
         })
     } else if(!/^[a-zA-Z ]+$/.test(name)){
         res.json({
-            status: 'FAILED',
+            status: 'FAILED', //TODO: Proper coded status
             message: "Invalid name entered"
         })
     } else if(!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
         res.json({
-            status: 'FAILED',
+            status: 'FAILED', //TODO: Proper coded status
             message: "Invalid email entered"
         })
     } else if(!(new Date(dateOfBirth).getTime())) {
         res.json({
-            status: 'FAILED',
+            status: 'FAILED', //TODO: Proper coded status
             message: "Invalid date of birth entered"
         })  
     } else if(password.length < 8){
         res.json({
-            status: 'FAILED',
+            status: 'FAILED', //TODO: Proper coded status
             message: "Passwor is too short!"
         })  
     } else {
         User.find({email}).then(result => {
             if(result.length){
                 res.json({
-                    status: "FAILED",
+                    status: "FAILED", //TODO: Proper coded status
                     message: "User with the provided email already exist"
                 })
             } else {
@@ -57,21 +57,21 @@ router.post('/signup', (req, res) => {
 
                     newUser.save().then(result => {
                         res.json({
-                            status: "SUCCESS",
+                            status: "SUCCESS", //TODO: Proper coded status
                             message: "Signup successful",
                             data: result
                         });
                     })
                     .catch(err => {
                         res.json({
-                            status: "FAILED",
+                            status: "FAILED", //TODO: Proper coded status
                             message: "An error occured while saving user account!"
                         })
                     })
                 })
                 .catch(err => {
                     res.json({
-                        status: "FAILED",
+                        status: "FAILED", //TODO: Proper coded status
                         message: "An error occured while hashing password!"
                     })
                 })
@@ -79,7 +79,7 @@ router.post('/signup', (req, res) => {
         }).catch(err => {
             console.log(err);
             res.json({
-                status: "FAILED",
+                status: "FAILED", //TODO: Proper coded status
                 message: "An error occured while checking existing user!"
             })
         })
@@ -94,7 +94,7 @@ router.post('/signin', (req, res) => {
     
     if(email == '' || password == ''){
         res.json({
-            status: "FAILED",
+            status: "FAILED", //TODO: Proper coded status
             message: "Empty credentials supplied"
         })
     } else {
@@ -105,33 +105,33 @@ router.post('/signin', (req, res) => {
                bcrypt.compare(password, hashedPassword).then(result => {
                    if(result){
                        res.json({
-                           status: "SUCCESS",
+                           status: "SUCCESS", //TODO: Proper coded status
                            message: "Signin successful",
                            data: data
                        })
                    } else {
                        res.json({
-                           status: "FAILED",
+                           status: "FAILED", //TODO: Proper coded status
                            message: "Invalid password entered"
                        })
                    }
                })
                .catch(err => {
                    res.json({
-                       status: "FAILED",
+                       status: "FAILED", //TODO: Proper coded status
                        message: "An error occured while signing in"
                    })
                })
             } else {
                 res.json({
-                    status: "FAILED",
+                    status: "FAILED", //TODO: Proper coded status
                     message: "Invalid credentials entered!" 
                 })
             }
         })
         .catch(err => {
             res.json({
-                status: "FAILED",
+                status: "FAILED", //TODO: Proper coded status
                 message: "An error occured while checking for existging user"
             })
         })
